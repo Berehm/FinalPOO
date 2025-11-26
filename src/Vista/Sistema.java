@@ -5,6 +5,10 @@
 
 package Vista;
 
+import Modelo.Productos;
+import Modelo.ProductosDao;
+import javax.swing.table.DefaultTableModel;
+
 
 
 
@@ -14,9 +18,41 @@ package Vista;
  */
 public class Sistema extends javax.swing.JFrame {
 
-    
+    Productos pr = new Productos();
+    ProductosDao prDao = new ProductosDao();
+    DefaultTableModel modeloTablaProducto = new DefaultTableModel();
+    int idProducto = 0;
+    DefaultTableModel modeloVenta = new DefaultTableModel();
+    double totalPagar = 0.0;
     public Sistema() {
       initComponents();
+      configurarTablaProductos(); 
+      configurarTablaVentas();   
+}
+    
+    private void configurarTablaProductos(){
+    modeloTablaProducto.addColumn("ID");
+    modeloTablaProducto.addColumn("Nombre");
+    modeloTablaProducto.addColumn("Precio");
+    modeloTablaProducto.addColumn("Stock");
+}
+    private void configurarTablaVentas(){
+    modeloVenta.addColumn("Producto");
+    modeloVenta.addColumn("Cantidad");
+    modeloVenta.addColumn("Precio");
+    modeloVenta.addColumn("Subtotal");
+    TableVentas.setModel(modeloVenta);
+    
+    private void RegistrarProductos(){
+    pr.setNombre(txtNombre.getText());
+    pr.setPrecio(Double.parseDouble(txtPrecioPro.getText()));
+    pr.setStock(Integer.parseInt(txtCantPro.getText()));
+
+    prDao.registrar(pr); // <-- Usa tu DAO
+    listarProductos();   // <-- Se actualiza tabla
+    limpiarProducto();   // <-- Limpia cajas
+}
+    
 }
 
        public void ListarCliente() {
@@ -169,7 +205,7 @@ public class Sistema extends javax.swing.JFrame {
         btnEliminarPro = new javax.swing.JButton();
         btnNuevoPro = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        TableProducto = new javax.swing.JTable();
+        TableProductos = new javax.swing.JTable();
         txtIdproducto = new javax.swing.JTextField();
         label = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -1257,7 +1293,7 @@ public class Sistema extends javax.swing.JFrame {
                 .addGap(30, 30, 30))
         );
 
-        TableProducto.setModel(new javax.swing.table.DefaultTableModel(
+        TableProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -1268,12 +1304,12 @@ public class Sistema extends javax.swing.JFrame {
                 "ID", "RUC/DNI", "TELEFONO", "DIRECCION", "RAZON SOCIAL"
             }
         ));
-        TableProducto.addMouseListener(new java.awt.event.MouseAdapter() {
+        TableProductos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TableProductoMouseClicked(evt);
+                TableProductosMouseClicked(evt);
             }
         });
-        jScrollPane4.setViewportView(TableProducto);
+        jScrollPane4.setViewportView(TableProductos);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -1541,9 +1577,9 @@ public class Sistema extends javax.swing.JFrame {
            // TODO add your handling code here:
     }//GEN-LAST:event_txtPrecioProKeyTyped
 
-    private void TableProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableProductoMouseClicked
+    private void TableProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableProductosMouseClicked
       
-    }//GEN-LAST:event_TableProductoMouseClicked
+    }//GEN-LAST:event_TableProductosMouseClicked
 
     private void TableProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableProveedorMouseClicked
    
@@ -1642,7 +1678,7 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JLabel LabelVendedor;
     private com.toedter.calendar.JDateChooser Midate;
     private javax.swing.JTable TableCliente;
-    private javax.swing.JTable TableProducto;
+    private javax.swing.JTable TableProductos;
     private javax.swing.JTable TableProveedor;
     private javax.swing.JTable TableUsuarios;
     private javax.swing.JTable TableVenta;
