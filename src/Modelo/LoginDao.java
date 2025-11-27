@@ -61,7 +61,7 @@ public class LoginDao {
        List<login> Lista = new ArrayList<>();
        String sql = "SELECT * FROM usuarios";
        try {
-           con = cn.establecerconexion(); // <<< CAMBIO
+           con = cn.establecerconexion(); 
            ps = con.prepareStatement(sql);
            rs = ps.executeQuery();
            while (rs.next()) {               
