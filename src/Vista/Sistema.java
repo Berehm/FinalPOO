@@ -43,15 +43,7 @@ public class Sistema extends javax.swing.JFrame {
     modeloVenta.addColumn("Subtotal");
     TableVentas.setModel(modeloVenta);
     
-    private void RegistrarProductos(){
-    pr.setNombre(txtNombre.getText());
-    pr.setPrecio(Double.parseDouble(txtPrecioPro.getText()));
-    pr.setStock(Integer.parseInt(txtCantPro.getText()));
-
-    prDao.registrar(pr); // <-- Usa tu DAO
-    listarProductos();   // <-- Se actualiza tabla
-    limpiarProducto();   // <-- Limpia cajas
-}
+   
     
 }
 
@@ -1208,6 +1200,11 @@ public class Sistema extends javax.swing.JFrame {
 
         btnGuardarpro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/GuardarTodo.png"))); // NOI18N
         btnGuardarpro.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnGuardarpro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarproActionPerformed(evt);
+            }
+        });
 
         btnEditarpro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Actualizar (2).png"))); // NOI18N
         btnEditarpro.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -1637,6 +1634,10 @@ public class Sistema extends javax.swing.JFrame {
     private void btnEditarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarProveedorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEditarProveedorActionPerformed
+
+    private void btnGuardarproActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarproActionPerformed
+             // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuardarproActionPerformed
 
 
     public static void main(String args[]) {
