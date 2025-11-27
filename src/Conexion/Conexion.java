@@ -31,9 +31,8 @@ public class Conexion {
                           ";databaseName=" + bd + 
                           ";encrypt=false;trustServerCertificate=true";
        conectar= DriverManager.getConnection(cadena,usuario,contrasenia);
-       JOptionPane.showMessageDialog(null,"se conecto correctamente");
+       
      }catch (Exception e){
-         JOptionPane.showMessageDialog(null,"Error al conectar a la base de datos,error:"+ e.toString());
          
        }
        return conectar;
