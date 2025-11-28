@@ -10,17 +10,12 @@ import Modelo.login;
 import javax.swing.JOptionPane;
 
 
-
-
-
 public class Login extends javax.swing.JFrame {
     login lg = new login();
     LoginDao login = new LoginDao();
     public Login() {
         initComponents();
-        this.setLocationRelativeTo(null);
-        txtCorreo.setText("");
-        txtPass.setText("");
+        this.setLocationRelativeTo(null);  
     }
     public void validar(){
         String correo = txtCorreo.getText();
