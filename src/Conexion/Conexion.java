@@ -20,7 +20,7 @@ public class Conexion {
     
     String usuario = "usersql";
     String contrasenia ="root";
-    String bd ="dbsupermercado";
+    String bd ="SistemaVentas";
     String ip ="localhost";
     String puerto= "1433";
     String cadena = "jdbc:sqlserver://"+ip+":"+puerto+"/"+bd;
