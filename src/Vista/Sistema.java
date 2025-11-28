@@ -7,6 +7,7 @@ package Vista;
 
 import Modelo.Productos;
 import Modelo.ProductosDao;
+import Modelo.login;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -24,7 +25,7 @@ public class Sistema extends javax.swing.JFrame {
     int idProducto = 0;
     DefaultTableModel modeloVenta = new DefaultTableModel();
     double totalPagar = 0.0;
-    public Sistema() {
+    public Sistema(login lg) {
       initComponents();
       configurarTablaProductos(); 
       configurarTablaVentas();   
