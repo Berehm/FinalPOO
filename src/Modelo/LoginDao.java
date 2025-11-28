@@ -18,11 +18,11 @@ public class LoginDao {
     ResultSet rs;
     Conexion cn = new Conexion();
     
-    public login log(String correo, String pass){
+       public login log(String correo, String pass){
         login l = new login();
         String sql = "SELECT * FROM usuarios WHERE correo = ? AND pass = ?";
         try {
-            con = cn.establecerconexion(); 
+            con = cn.establecerconexion();
             ps = con.prepareStatement(sql);
             ps.setString(1, correo);
             ps.setString(2, pass);
@@ -33,6 +33,7 @@ public class LoginDao {
                 l.setCorreo(rs.getString("correo"));
                 l.setPass(rs.getString("pass"));
                 l.setRol(rs.getString("rol"));
+                
             }
         } catch (SQLException e) {
             System.out.println(e.toString());
@@ -43,7 +44,7 @@ public class LoginDao {
     public boolean Registrar(login reg){
         String sql = "INSERT INTO usuarios (nombre, correo, pass, rol) VALUES (?,?,?,?)";
         try {
-            con = cn.establecerconexion(); 
+            con = cn.establecerconexion();
             ps = con.prepareStatement(sql);
             ps.setString(1, reg.getNombre());
             ps.setString(2, reg.getCorreo());
@@ -57,11 +58,11 @@ public class LoginDao {
         }
     }
     
-    public List<login> ListarUsuarios(){
-       List<login> Lista = new ArrayList<>();
+    public List ListarUsuarios(){
+       List<login> Lista = new ArrayList();
        String sql = "SELECT * FROM usuarios";
        try {
-           con = cn.establecerconexion(); 
+           con = cn.establecerconexion();
            ps = con.prepareStatement(sql);
            rs = ps.executeQuery();
            while (rs.next()) {               
