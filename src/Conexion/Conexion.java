@@ -4,38 +4,42 @@
  */
 package Conexion;
 
-/**
- *
- * @author USER
- */
 import java.sql.Connection;
-import javax.swing.JOptionPane;
 import java.sql.DriverManager;
-/**
- *
- * @author USER
- */
+import java.sql.SQLException;
+
 public class Conexion {
-    Connection conectar=null;
-    
+
+    Connection conectar = null;
+
     String usuario = "usersql";
-    String contrasenia ="root";
-    String bd ="SistemaVentas";
-    String ip ="localhost";
-    String puerto= "1433";
-    String cadena = "jdbc:sqlserver://"+ip+":"+puerto+"/"+bd;
+    String contrasenia = "root";
+    String bd = "SistemaVentas";
+    String ip = "localhost";
+    String puerto = "1433";
 
-    public Connection establecerconexion(){
-     try {   
-       String cadena = "jdbc:sqlserver://" + ip + ":" + puerto + 
-                          ";databaseName=" + bd + 
-                          ";encrypt=false;trustServerCertificate=true";
-       conectar= DriverManager.getConnection(cadena,usuario,contrasenia);
-       
-     }catch (Exception e){
-         
-       }
-       return conectar;
-    }    
+    public Connection establecerconexion() {
+        try {
 
-  }   
+            // 🔹Cargar el driver SQL Server (OBLIGATORIO)
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+
+            // 🔹Cadena correcta para SQL Server
+            String cadena = "jdbc:sqlserver://" + ip + ":" + puerto 
+                    + ";databaseName=" + bd 
+                    + ";encrypt=false;trustServerCertificate=true";
+
+            // 🔹Conectando
+            conectar = DriverManager.getConnection(cadena, usuario, contrasenia);
+
+            System.out.println("CONECTADO A SQL SERVER");
+
+        } catch (ClassNotFoundException e) {
+            System.out.println("ERROR: Falta el driver JDBC → " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("ERROR SQL → " + e.getMessage());
+        }
+
+        return conectar;
+    }
+}
