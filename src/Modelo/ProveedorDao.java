@@ -69,6 +69,29 @@ public class ProveedorDao {
         return Listapr;
     }
     
+    public List<Proveedor> ListarProveedorCombo(){
+    List<Proveedor> lista = new ArrayList<>();
+    String sql = "SELECT id, nombre FROM proveedor"; 
+
+    try {
+        con = cn.establecerconexion();
+        ps = con.prepareStatement(sql);
+        rs = ps.executeQuery();
+
+        while(rs.next()){
+            Proveedor pr = new Proveedor();
+            pr.setId(rs.getInt("id"));
+            pr.setNombre(rs.getString("nombre"));
+            lista.add(pr);
+        }
+
+    } catch (SQLException e) {
+        System.out.println("Error al listar proveedores en combo: " + e.toString());
+    }
+
+    return lista;
+}
+    
     public boolean EliminarProveedor(int id){
         String sql = "DELETE FROM proveedor WHERE id = ? ";
         try {
