@@ -83,7 +83,7 @@ public class ProductosDao {
     public boolean ModificarProductos(Productos pro){
        String sql = "UPDATE productos SET codigo=?, nombre=?, proveedor=?, stock=?, precio=? WHERE id=?";
        try {
-           con = cn.establecerconexion();  // <<< FALTABA CONEXIÓN
+           con = cn.establecerconexion(); 
            ps = con.prepareStatement(sql);
            ps.setString(1, pro.getCodigo());
            ps.setString(2, pro.getNombre());
@@ -124,6 +124,19 @@ public class ProductosDao {
         }
         return producto;
     }
+    
+    public void ActualizarStock(int nuevoStock, int idProducto) {
+    String sql = "UPDATE productos SET stock = ? WHERE id = ?";
+    try {
+        con = cn.establecerconexion();
+        ps = con.prepareStatement(sql);
+        ps.setInt(1, nuevoStock);
+        ps.setInt(2, idProducto);
+        ps.executeUpdate();
+    } catch (SQLException e) {
+        System.out.println("Error al actualizar stock: " + e.getMessage());
+    }
+}
 
     public Productos BuscarId(int id){
         Productos pro = new Productos();
