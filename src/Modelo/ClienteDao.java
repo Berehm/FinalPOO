@@ -18,7 +18,7 @@ public class ClienteDao {
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
-
+ 
     // Método para listar todos los clientes
     public List<Cliente> ListarCliente() {
         List<Cliente> ListaCl = new ArrayList<>();
