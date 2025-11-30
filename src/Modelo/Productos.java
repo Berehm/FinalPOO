@@ -9,7 +9,7 @@ package Modelo;
  * @author USER
  */
 public class Productos {
-        private int id;
+    private int id;
     private String codigo;
     private String nombre;
     private int proveedor;
