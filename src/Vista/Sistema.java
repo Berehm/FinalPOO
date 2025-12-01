@@ -1922,7 +1922,25 @@ if (txtIdCliente.getText().equals("")) {
     }//GEN-LAST:event_txtCodigoVentaKeyTyped
 
     private void txtCodigoVentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoVentaKeyPressed
-                   
+         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (!"".equals(txtCodigoVenta.getText())) {
+                String cod = txtCodigoVenta.getText();
+                pro = prDao.BuscarPro(cod);
+                if (pro.getNombre() != null) {
+                    txtIdPro.setText("" + pro.getId());
+                    txtDescripcionVenta.setText("" + pro.getNombre());
+                    txtPrecioVenta.setText("" + pro.getPrecio());
+                    txtStockDisponible.setText("" + pro.getStock());
+                    txtCantidadVenta.requestFocus();
+                } else {
+                    LimpiarVenta();
+                    txtCodigoVenta.requestFocus();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese el codigo del productos");
+                txtCodigoVenta.requestFocus();
+            }
+        }                        
     }//GEN-LAST:event_txtCodigoVentaKeyPressed
 
     private void btnEditarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarProveedorActionPerformed
