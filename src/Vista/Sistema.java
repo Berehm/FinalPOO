@@ -7,6 +7,7 @@ package Vista;
 
 import Modelo.Cliente;
 import Modelo.ClienteDao;
+import Modelo.Combo;
 import Modelo.Detalle;
 import Modelo.Productos;
 import Modelo.ProductosDao;
@@ -940,6 +941,11 @@ public void llenarProveedor(){
         jLabel28.setForeground(new java.awt.Color(255, 153, 0));
         jLabel28.setText("Provedor");
 
+        cbxProveedorPro.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxProveedorProItemStateChanged(evt);
+            }
+        });
         cbxProveedorPro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxProveedorProActionPerformed(evt);
@@ -1694,7 +1700,7 @@ public void llenarProveedor(){
     }//GEN-LAST:event_txtDniClienteKeyTyped
 
     private void btnGuardarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarClienteActionPerformed
-        if (!txtDniCliente.getText().equals("") && !txtNombreCliente.getText().equals("")) {
+     if (!txtDniCliente.getText().equals("") && !txtNombreCliente.getText().equals("")) {
     cl.setDni(txtDniCliente.getText());
     cl.setNombre(txtNombreCliente.getText());
     cl.setTelefono(txtTelefonoCliente.getText());
@@ -1762,22 +1768,22 @@ if (txtIdCliente.getText().equals("")) {
     }//GEN-LAST:event_txtRucProveedorKeyTyped
 
     private void btnguardarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarProveedorActionPerformed
-                 if (!txtRucProveedor.getText().equals("") && !txtRucProveedor.getText().equals("")) {
-    pr0.setRuc(txtRucProveedor.getText());
-    pr0.setNombre(txtNombreproveedor.getText());
-    pr0.setTelefono(txtTelefonoProveedor.getText());
-    pr0.setDireccion(txtDireccionProveedor.getText());
-
-    if (pr0Dao.RegistrarProveedor(pr0)) {
-        JOptionPane.showMessageDialog(null, "Cliente registrado con éxito");
-        limpiarProveedor();
-        listarProveedor();
-    } else {
-        JOptionPane.showMessageDialog(null, "Error al registrar Proveedor");
-    }
-} else {
-    JOptionPane.showMessageDialog(null, "Los campos Ruc y Nombre son obligatorios");
-}          
+               if (!"".equals(txtRucProveedor.getText()) || !"".equals(txtNombreproveedor.getText()) || !"".equals(txtTelefonoProveedor.getText()) || !"".equals(txtDireccionProveedor.getText())) {
+            pr0.setRuc(txtRucProveedor.getText());
+            pr0.setNombre(txtNombreproveedor.getText());
+            pr0.setTelefono(txtTelefonoProveedor.getText());
+            pr0.setDireccion(txtDireccionProveedor.getText());
+            pr0Dao.RegistrarProveedor(pr0);
+            JOptionPane.showMessageDialog(null, "Proveedor Registrado");
+            LimpiarTable();
+            listarProveedor();
+            limpiarProveedor();
+            btnEditarProveedor.setEnabled(false);
+            btnEliminarProveedor.setEnabled(false);
+            btnguardarProveedor.setEnabled(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Los campos esta vacios");
+        }
     }//GEN-LAST:event_btnguardarProveedorActionPerformed
 
     private void TableVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableVentasMouseClicked
@@ -1826,7 +1832,8 @@ if (txtIdCliente.getText().equals("")) {
     }//GEN-LAST:event_btnUsuariosActionPerformed
 
     private void btnProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProductosMouseClicked
-      
+        cbxProveedorPro.removeAllItems();
+        llenarProveedor();      
     }//GEN-LAST:event_btnProductosMouseClicked
 
     private void btnActualizarConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarConfigActionPerformed
@@ -1842,11 +1849,29 @@ if (txtIdCliente.getText().equals("")) {
     }//GEN-LAST:event_txtPrecioProKeyTyped
 
     private void TableProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableProductosMouseClicked
-      
+      btnEditarpro.setEnabled(true);
+        btnEliminarPro.setEnabled(true);
+        btnGuardarpro.setEnabled(true);
+        int fila = TableProductos.rowAtPoint(evt.getPoint());
+        txtIdproducto.setText(TableProductos.getValueAt(fila, 0).toString());
+        pro = prDao.BuscarId(Integer.parseInt(txtIdproducto.getText()));
+        txtCodigoPro.setText(pro.getCodigo());
+        txtDesPro.setText(pro.getNombre());
+        txtCantPro.setText("" + pro.getStock());
+        txtPrecioPro.setText("" + pro.getPrecio());
+        cbxProveedorPro.setSelectedItem(new Combo(pro.getProveedor(), pro.getProveedorPro()));      
     }//GEN-LAST:event_TableProductosMouseClicked
 
     private void TableClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableClienteMouseClicked
-     
+        btnEditarCliente.setEnabled(true);
+        btnEliminarCliente.setEnabled(true);
+        btnGuardarCliente.setEnabled(false);
+        int fila = TableCliente.rowAtPoint(evt.getPoint());
+        txtIdCliente.setText(TableCliente.getValueAt(fila, 0).toString());
+        txtDniCliente.setText(TableCliente.getValueAt(fila, 1).toString());
+        txtNombreCliente.setText(TableCliente.getValueAt(fila, 2).toString());
+        txtTelefonoCliente.setText(TableCliente.getValueAt(fila, 3).toString());
+        txtDirecionCliente.setText(TableCliente.getValueAt(fila, 4).toString());     
     }//GEN-LAST:event_TableClienteMouseClicked
 
     private void btnGraficarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraficarActionPerformed
@@ -2053,7 +2078,29 @@ if (txtIdCliente.getText().equals("")) {
     }//GEN-LAST:event_btnEliminarProveedorActionPerformed
 
     private void btnEditarproActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarproActionPerformed
-       // TODO add your handling code here:
+        if ("".equals(txtIdproducto.getText())) {
+            JOptionPane.showMessageDialog(null, "Seleecione una fila");
+        } else {
+            if (!"".equals(txtCodigoPro.getText()) || !"".equals(txtDesPro.getText()) || !"".equals(txtCantPro.getText()) || !"".equals(txtPrecioPro.getText())) {
+                pro.setCodigo(txtCodigoPro.getText());
+                pro.setNombre(txtDesPro.getText());
+                Combo itemP = (Combo) cbxProveedorPro.getSelectedItem();
+                pro.setProveedor(itemP.getId());
+                pro.setStock(Integer.parseInt(txtCantPro.getText()));
+                pro.setPrecio(Double.parseDouble(txtPrecioPro.getText()));
+                pro.setId(Integer.parseInt(txtIdproducto.getText()));
+                prDao.ModificarProductos(pro);
+                JOptionPane.showMessageDialog(null, "Producto Modificado");
+                LimpiarTable();
+                listarProductos();
+                limpiarProducto();
+                cbxProveedorPro.removeAllItems();
+                llenarProveedor();
+                btnEditarpro.setEnabled(false);
+                btnEliminarPro.setEnabled(false);
+                btnGuardarpro.setEnabled(true);
+            }
+        }      
     }//GEN-LAST:event_btnEditarproActionPerformed
 
     private void btnEliminarProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProActionPerformed
@@ -2073,7 +2120,7 @@ if (txtIdCliente.getText().equals("")) {
     }//GEN-LAST:event_txtDniClienteActionPerformed
 
     private void cbxProveedorProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProveedorProActionPerformed
-        // TODO add your handling code here:
+      
     }//GEN-LAST:event_cbxProveedorProActionPerformed
 
     private void btnNuevoProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoProveedorActionPerformed
@@ -2089,12 +2136,24 @@ if (txtIdCliente.getText().equals("")) {
     }//GEN-LAST:event_txtNombreproveedorActionPerformed
 
     private void TableProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableProveedorMouseClicked
-        // TODO add your handling code here:
+        btnEditarProveedor.setEnabled(true);
+        btnEliminarProveedor.setEnabled(true);
+        btnguardarProveedor.setEnabled(false);
+        int fila = TableProveedor.rowAtPoint(evt.getPoint());
+        txtIdProveedor.setText(TableProveedor.getValueAt(fila, 0).toString());
+        txtRucProveedor.setText(TableProveedor.getValueAt(fila, 1).toString());
+        txtNombreproveedor.setText(TableProveedor.getValueAt(fila, 2).toString());
+        txtTelefonoProveedor.setText(TableProveedor.getValueAt(fila, 3).toString());
+        txtDireccionProveedor.setText(TableProveedor.getValueAt(fila, 4).toString());
     }//GEN-LAST:event_TableProveedorMouseClicked
 
     private void TableUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableUsuariosMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_TableUsuariosMouseClicked
+
+    private void cbxProveedorProItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxProveedorProItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxProveedorProItemStateChanged
 
     public static void main(String args[]) {
 
