@@ -9,6 +9,7 @@ import Modelo.Cliente;
 import Modelo.ClienteDao;
 import Modelo.Combo;
 import Modelo.Detalle;
+import Modelo.Eventos;
 import Modelo.LoginDao;
 import Modelo.Productos;
 import Modelo.ProductosDao;
@@ -32,7 +33,7 @@ import javax.swing.table.DefaultTableModel;
 public class Sistema extends javax.swing.JFrame {
 
    ProductosDao pDao = new ProductosDao();
-    VentaDao vDao = new VentaDao();
+    VentaDao Vdao = new VentaDao();
     Detalle Dv = new Detalle();
     ProductosDao prDao = new ProductosDao();
     Productos pro = new Productos();
@@ -42,12 +43,13 @@ public class Sistema extends javax.swing.JFrame {
     Proveedor pr0 = new Proveedor();
      login lg = new login();
      LoginDao login = new LoginDao();
+    Eventos event = new Eventos();
   DefaultTableModel modelo = new DefaultTableModel();
     DefaultTableModel modeloVenta = new DefaultTableModel();
 
 
-    int idProducto= 0;
-    double TotalPagar = 0.0;
+       int idProducto= 0;
+      double Totalpagar = 0.00;
     
        public Sistema() {
         initComponents();
@@ -245,6 +247,24 @@ public void llenarProveedor(){
         txtCorreo.setText("");
         txtPass.setText("");
     }
+     
+         private void RegistrarDetalle() { 
+               int id = Vdao.IdVenta();
+        for (int i = 0; i < TableVenta.getRowCount(); i++) {
+            int id_pro = Integer.parseInt(TableVenta.getValueAt(i, 0).toString());
+            int cant = Integer.parseInt(TableVenta.getValueAt(i, 2).toString());
+            double precio = Double.parseDouble(TableVenta.getValueAt(i, 3).toString());
+            Dv.setId_pro(id_pro);
+            Dv.setCantidad(cant);
+            Dv.setPrecio(precio);
+            Dv.setId(id);
+            Vdao.RegistrarDetalle(Dv);
+
+        }
+        int cliente = Integer.parseInt(txtIdCV.getText());
+        Vdao.pdfV(id, cliente, Totalpagar, LabelVendedor.getText());
+    }
+
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -1514,6 +1534,9 @@ public void llenarProveedor(){
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtCantidadVentaKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantidadVentaKeyTyped(evt);
+            }
         });
 
         javax.swing.GroupLayout JPanel2Layout = new javax.swing.GroupLayout(JPanel2);
@@ -1990,33 +2013,43 @@ if (txtIdCliente.getText().equals("")) {
     }//GEN-LAST:event_txtDescripcionVentaKeyPressed
 
     private void txtDescripcionVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionVentaKeyTyped
-          // TODO add your handling code here:
+         event.textKeyPress(evt);   // TODO add your handling code here:
     }//GEN-LAST:event_txtDescripcionVentaKeyTyped
 
     private void txtCodigoVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoVentaKeyTyped
-        // TODO add your handling code here:
+         event.numberKeyPress(evt);        // TODO add your handling code here:
     }//GEN-LAST:event_txtCodigoVentaKeyTyped
 
     private void txtCodigoVentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoVentaKeyPressed
-         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (!"".equals(txtCodigoVenta.getText())) {
-                String cod = txtCodigoVenta.getText();
-                pro = prDao.BuscarPro(cod);
-                if (pro.getNombre() != null) {
-                    txtIdPro.setText("" + pro.getId());
-                    txtDescripcionVenta.setText("" + pro.getNombre());
-                    txtPrecioVenta.setText("" + pro.getPrecio());
-                    txtStockDisponible.setText("" + pro.getStock());
-                    txtCantidadVenta.requestFocus();
-                } else {
-                    LimpiarVenta();
-                    txtCodigoVenta.requestFocus();
-                }
+      if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        if (!"".equals(txtCodigoVenta.getText())) {
+            String cod = txtCodigoVenta.getText();
+            pro = prDao.BuscarPro(cod);
+            
+            if (pro.getNombre() != null) {
+                // Producto encontrado - Llenar los campos
+                txtIdPro.setText("" + pro.getId());
+                txtDescripcionVenta.setText("" + pro.getNombre());
+                txtPrecioVenta.setText("" + pro.getPrecio());
+                txtStockDisponible.setText("" + pro.getStock());
+                txtCantidadVenta.requestFocus();
             } else {
-                JOptionPane.showMessageDialog(null, "Ingrese el codigo del productos");
+                // Producto NO encontrado - Mostrar mensaje
+                JOptionPane.showMessageDialog(null, 
+                    "Producto no encontrado", 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+                LimpiarVenta();
                 txtCodigoVenta.requestFocus();
             }
-        }                        
+        } else {
+            JOptionPane.showMessageDialog(null, 
+                "Ingrese el código del producto",
+                "Advertencia",
+                JOptionPane.WARNING_MESSAGE);
+            txtCodigoVenta.requestFocus();
+        }
+    }              
     }//GEN-LAST:event_txtCodigoVentaKeyPressed
 
     private void btnEditarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarProveedorActionPerformed
@@ -2206,6 +2239,10 @@ if (txtIdCliente.getText().equals("")) {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxProveedorProItemStateChanged
 
+    private void txtCantidadVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadVentaKeyTyped
+           event.numberKeyPress(evt);        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCantidadVentaKeyTyped
+
     public static void main(String args[]) {
 
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -2385,8 +2422,6 @@ if (txtIdCliente.getText().equals("")) {
        
     }
 
-    private void RegistrarDetalle() { 
-    }
 
     private void ActualizarStock() {
    
