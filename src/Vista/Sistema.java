@@ -9,6 +9,7 @@ import Modelo.Cliente;
 import Modelo.ClienteDao;
 import Modelo.Combo;
 import Modelo.Detalle;
+import Modelo.LoginDao;
 import Modelo.Productos;
 import Modelo.ProductosDao;
 import Modelo.Proveedor;
@@ -39,8 +40,8 @@ public class Sistema extends javax.swing.JFrame {
      Cliente cl = new Cliente();
     ProveedorDao pr0Dao = new ProveedorDao();
     Proveedor pr0 = new Proveedor();
-     
-
+     login lg = new login();
+     LoginDao login = new LoginDao();
   DefaultTableModel modelo = new DefaultTableModel();
     DefaultTableModel modeloVenta = new DefaultTableModel();
 
@@ -54,7 +55,22 @@ public class Sistema extends javax.swing.JFrame {
     public Sistema(login lg) {
       initComponents();
      this.setLocationRelativeTo(null);
-      
+       
+        txtIdCliente.setVisible(false);
+        txtIdVenta.setVisible(false);
+        txtIdPro.setVisible(false);
+        txtIdproducto.setVisible(false);
+        txtIdProveedor.setVisible(false);
+        txtIdConfig.setVisible(false);
+        txtIdCV.setVisible(false);
+        ListarConfig();
+        if (lg.getRol().equals("Cajero")) {
+            btnProductos.setEnabled(false);
+            btnProveedor.setEnabled(false);
+            LabelVendedor.setText(lg.getNombre());
+        }else{
+            LabelVendedor.setText(lg.getNombre());
+        }
      
 }
     
@@ -143,6 +159,7 @@ public class Sistema extends javax.swing.JFrame {
     }
 }
 
+    
       public void LimpiarTable() {
      for (int i = 0; i < modelo.getRowCount(); i++) {
             modelo.removeRow(i);
@@ -182,7 +199,17 @@ public void llenarProveedor(){
 }
 
      public void ListarUsuarios() {
-      
+        List<login> Listar = login.ListarUsuarios();
+        modelo = (DefaultTableModel) TableUsuarios.getModel();
+        Object[] ob = new Object[4];
+        for (int i = 0; i < Listar.size(); i++) {
+            ob[0] = Listar.get(i).getId();
+            ob[1] = Listar.get(i).getNombre();
+            ob[2] = Listar.get(i).getCorreo();
+            ob[3] = Listar.get(i).getRol();
+            modelo.addRow(ob);
+        }
+        TableUsuarios.setModel(modelo);
     }
     
       public void listarProductos() {
@@ -213,6 +240,11 @@ public void llenarProveedor(){
 
     }
     
+     private void nuevoUsuario(){
+        txtNombre.setText("");
+        txtCorreo.setText("");
+        txtPass.setText("");
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -1797,7 +1829,23 @@ if (txtIdCliente.getText().equals("")) {
     }//GEN-LAST:event_txtCorreoActionPerformed
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
-        
+          if(txtNombre.getText().equals("") || txtCorreo.getText().equals("") || txtPass.getPassword().equals("")){
+            JOptionPane.showMessageDialog(null, "Todo los campos son requeridos");
+        }else{
+            String correo = txtCorreo.getText();
+            String pass = String.valueOf(txtPass.getPassword());
+            String nom = txtNombre.getText();
+            String rol = cbxRol.getSelectedItem().toString();
+            lg.setNombre(nom);
+            lg.setCorreo(correo);
+            lg.setPass(pass);
+            lg.setRol(rol);
+            login.Registrar(lg);
+            JOptionPane.showMessageDialog(null, "Usuario Registrado");
+            LimpiarTable();
+            ListarUsuarios();
+            nuevoUsuario();
+        }        
     }//GEN-LAST:event_btnIniciarActionPerformed
 
     private void txtCodigoVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoVentaActionPerformed
