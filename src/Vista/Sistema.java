@@ -15,7 +15,9 @@ import Modelo.Proveedor;
 import Modelo.ProveedorDao;
 import Modelo.VentaDao;
 import Modelo.login;
+import Reportes.Grafico;
 import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -52,7 +54,7 @@ public class Sistema extends javax.swing.JFrame {
     public Sistema(login lg) {
       initComponents();
      this.setLocationRelativeTo(null);
- 
+      
      
 }
     
@@ -1640,12 +1642,11 @@ public void llenarProveedor(){
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(56, 56, 56)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 857, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 888, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 857, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 888, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1875,7 +1876,9 @@ if (txtIdCliente.getText().equals("")) {
     }//GEN-LAST:event_TableClienteMouseClicked
 
     private void btnGraficarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraficarActionPerformed
-     
+
+        String fechaReporte = new SimpleDateFormat("dd/MM/yyyy").format(Midate.getDate());
+        Grafico.Graficar(fechaReporte);     
     }//GEN-LAST:event_btnGraficarActionPerformed
 
     private void btnGenerarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarVentaActionPerformed
