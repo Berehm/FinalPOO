@@ -1112,9 +1112,9 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                           <Component id="jPanel14" max="32767" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
                           <Component id="jScrollPane4" min="-2" pref="460" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="229" max="-2" attributes="0"/>
@@ -1278,6 +1278,9 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtDesPro">
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDesProActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel26">
                       <Properties>
@@ -1328,7 +1331,7 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbxProveedorProActionPerformed"/>
                       </Events>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Object&gt;"/>
                       </AuxValues>
                     </Component>
                     <Component class="javax.swing.JButton" name="btnGuardarpro">
@@ -1402,12 +1405,11 @@
                     <Component class="javax.swing.JTable" name="TableProductos">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="5" rowCount="4">
+                          <Table columnCount="4" rowCount="4">
                             <Column editable="true" title="ID" type="java.lang.Object"/>
                             <Column editable="true" title="RUC/DNI" type="java.lang.Object"/>
                             <Column editable="true" title="TELEFONO" type="java.lang.Object"/>
                             <Column editable="true" title="DIRECCION" type="java.lang.Object"/>
-                            <Column editable="true" title="RAZON SOCIAL" type="java.lang.Object"/>
                           </Table>
                         </Property>
                       </Properties>
@@ -1914,31 +1916,31 @@
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jScrollPane1" min="-2" pref="736" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                                          <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Component id="txtRucVenta" min="-2" pref="122" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel12" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="txtNombreClienteventa" alignment="0" min="-2" pref="230" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtIdCV" min="-2" pref="44" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                                  <Component id="btnGenerarVenta" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtTotal" min="-2" pref="76" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                                  <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <Component id="txtRucVenta" min="-2" pref="122" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel12" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtNombreClienteventa" alignment="0" min="-2" pref="230" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="txtIdCV" min="-2" pref="44" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                          <Component id="btnGenerarVenta" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="txtTotal" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" min="-2" pref="798" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1963,7 +1965,7 @@
                                           <Component id="txtPrecioVenta" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace min="0" pref="1" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="4" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
@@ -1985,7 +1987,7 @@
                               </Group>
                               <Component id="btnEliminarventa" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                           <Component id="jScrollPane1" min="-2" pref="222" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
@@ -2006,12 +2008,12 @@
                                       <Component id="btnGenerarVenta" alignment="0" min="-2" pref="24" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtTotal" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                          <Component id="txtTotal" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace pref="46" max="32767" attributes="0"/>
+                          <EmptySpace pref="49" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -2124,11 +2126,12 @@
                     <Component class="javax.swing.JTable" name="TableVenta">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="4" rowCount="4">
+                          <Table columnCount="5" rowCount="4">
                             <Column editable="true" title="ID" type="java.lang.Object"/>
                             <Column editable="true" title="DESCRIPCION" type="java.lang.Object"/>
+                            <Column editable="true" title="CANTIDAD" type="java.lang.Object"/>
                             <Column editable="true" title="PRECIO U." type="java.lang.Object"/>
-                            <Column editable="true" title="TOTAL" type="java.lang.Object"/>
+                            <Column editable="true" title="PRECIO TOTAL" type="java.lang.Object"/>
                           </Table>
                         </Property>
                       </Properties>
@@ -2204,8 +2207,6 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGraficarActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtTotal">
-                </Component>
                 <Component class="javax.swing.JButton" name="btnLimpiarVenta">
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtCantidadVenta">
@@ -2213,6 +2214,8 @@
                     <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCantidadVentaKeyPressed"/>
                     <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCantidadVentaKeyTyped"/>
                   </Events>
+                </Component>
+                <Component class="javax.swing.JTextField" name="txtTotal">
                 </Component>
               </SubComponents>
             </Container>
