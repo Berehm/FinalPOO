@@ -135,3 +135,125 @@ GO
 -- Ver configuración
 SELECT * FROM config;
 GO
+
+SELECT * FROM proveedor;
+GO
+
+SELECT * FROM productos;
+GO
+-- Registrar venta
+CREATE PROCEDURE RegistrarVenta
+    @cliente INT,
+    @id_usuario INT,
+    @vendedor VARCHAR(100),
+    @total DECIMAL(10,2),
+    @fecha DATE
+AS
+BEGIN
+
+    INSERT INTO ventas (cliente, id_usuario, vendedor, total, fecha)
+    VALUES (@cliente, @id_usuario, @vendedor, @total, @fecha);
+END;
+
+
+-- Registrar detalle de venta
+CREATE PROCEDURE RegistrarDetalle
+    @id_pro INT,
+    @cantidad INT,
+    @precio DECIMAL(10,2),
+    @id_venta INT
+AS
+BEGIN
+    INSERT INTO detalle (id_pro, cantidad, precio, id_venta)
+    VALUES (@id_pro, @cantidad, @precio, @id_venta);
+END;
+
+
+-- Actualizar stock por venta
+CREATE PROCEDURE ActualizarStock
+    @id_pro INT,
+    @cantidad INT
+AS
+BEGIN
+    UPDATE productos
+    SET stock = stock - @cantidad
+    WHERE id = @id_pro;
+END;
+
+
+------------------------------
+-- 3.5.2 FUNCIONES
+------------------------------
+
+-- Obtener stock de un producto
+CREATE FUNCTION ObtenerStock (@id_pro INT)
+RETURNS INT
+AS
+BEGIN
+    DECLARE @resultado INT;
+
+    SELECT @resultado = stock 
+    FROM productos 
+    WHERE id = @id_pro;
+
+    RETURN @resultado;
+END;
+
+
+-- Obtener total calculado de una venta
+CREATE FUNCTION TotalVenta (@id_venta INT)
+RETURNS DECIMAL(10,2)
+AS
+BEGIN
+    DECLARE @total DECIMAL(10,2);
+
+    SELECT @total = SUM(cantidad * precio)
+    FROM detalle
+    WHERE id_venta = @id_venta;
+
+    RETURN @total;
+END;
+
+
+------------------------------
+-- 3.5.3 TRIGGERS
+------------------------------
+USE SistemaVentas;
+GO
+INSERT INTO clientes (dni, nombre, telefono, direccion)
+VALUES ('12345678', 'Cliente Prueba', '999999999', 'Lima');
+
+INSERT INTO ventas (cliente, id_usuario, vendedor, total, fecha)
+VALUES (1003, 1, 'Vendedor Prueba', 150.50, GETDATE());
+
+INSERT INTO detalle (id_pro, cantidad, precio, id_venta)
+VALUES (1, 2, 5.50);
+---------------------------
+-- Obtener total calculado de una venta
+CREATE FUNCTION TotalVenta (@id_venta INT)
+RETURNS DECIMAL(10,2)
+AS
+BEGIN
+    DECLARE @total DECIMAL(10,2);
+
+    SELECT @total = SUM(cantidad * precio)
+    FROM detalle
+    WHERE id_venta = @id_venta;
+
+    RETURN @total;
+END;
+
+-- 3.5.3 TRIGGERS
+------------------------------
+
+-- Trigger para disminuir stock automáticamente al registrar un detalle
+CREATE TRIGGER trg_ActualizarStockVenta
+ON detalle
+AFTER INSERT
+AS
+BEGIN
+    UPDATE productos
+    SET productos.stock = productos.stock - i.cantidad
+    FROM productos
+    INNER JOIN inserted i ON productos.id = i.id_pro;
+END;
