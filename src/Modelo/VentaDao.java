@@ -167,7 +167,7 @@ public class VentaDao {
             Image img = Image.getInstance(getClass().getResource("/Img/logo_pdf.png"));
             //Fecha
             Paragraph fecha = new Paragraph();
-            Font negrita = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLUE);
+            Font negrita = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.ORANGE);
             fecha.add(Chunk.NEWLINE);
             fecha.add("Vendedor: " + usuario + "\nFolio: " + idventa + "\nFecha: "
                     + new SimpleDateFormat("dd/MM/yyyy").format(date) + "\n\n");
