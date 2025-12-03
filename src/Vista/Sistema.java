@@ -21,6 +21,7 @@ import Modelo.login;
 import Reportes.Grafico;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -50,9 +51,10 @@ public class Sistema extends javax.swing.JFrame {
     Eventos event = new Eventos();
   DefaultTableModel modelo = new DefaultTableModel();
     DefaultTableModel modeloVenta = new DefaultTableModel();
+      DefaultTableModel tmp = new DefaultTableModel();
 
 
-       int idProducto= 0;
+         int item;
          double Totalpagar = 0.00;
     
        public Sistema() {
@@ -119,19 +121,14 @@ public class Sistema extends javax.swing.JFrame {
 
     
    public void LimpiarVenta() {
-        modeloVenta.setRowCount(0);
-        txtCodigoVenta.setText("");
+      txtCodigoVenta.setText("");
         txtDescripcionVenta.setText("");
         txtCantidadVenta.setText("");
-        txtPrecioVenta.setText("");
         txtStockDisponible.setText("");
-        txtIdPro.setText("");
-        txtNombreClienteventa.setText("");
-        txtRucVenta.setText("");
-        txtTotal.setText("0.00");
+        txtPrecioVenta.setText("");
+        txtIdVenta.setText("");
     }
-    
-    
+
     public void limpiarCliente() {
      txtIdCliente.setText("");
     txtDniCliente.setText("");
@@ -382,7 +379,7 @@ public void llenarProveedor(){
         jLabel12 = new javax.swing.JLabel();
         txtRucVenta = new javax.swing.JTextField();
         txtNombreClienteventa = new javax.swing.JTextField();
-        jLabel13 = new javax.swing.JLabel();
+        Label1 = new javax.swing.JLabel();
         txtIdCV = new javax.swing.JTextField();
         txtIdPro = new javax.swing.JTextField();
         Midate = new com.toedter.calendar.JDateChooser();
@@ -390,7 +387,7 @@ public void llenarProveedor(){
         btnGraficar = new javax.swing.JButton();
         btnLimpiarVenta = new javax.swing.JButton();
         txtCantidadVenta = new javax.swing.JTextField();
-        txtTotal = new javax.swing.JTextField();
+        LabelTotal = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -1510,10 +1507,10 @@ public void llenarProveedor(){
             }
         });
 
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 153, 0));
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/money.png"))); // NOI18N
-        jLabel13.setText("Total a Pagar");
+        Label1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Label1.setForeground(new java.awt.Color(255, 153, 0));
+        Label1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/money.png"))); // NOI18N
+        Label1.setText("Total a Pagar");
 
         btnGenerarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/print.png"))); // NOI18N
         btnGenerarVenta.addActionListener(new java.awt.event.ActionListener() {
@@ -1537,6 +1534,8 @@ public void llenarProveedor(){
                 txtCantidadVentaKeyTyped(evt);
             }
         });
+
+        LabelTotal.setText("-----");
 
         javax.swing.GroupLayout JPanel2Layout = new javax.swing.GroupLayout(JPanel2);
         JPanel2.setLayout(JPanel2Layout);
@@ -1605,9 +1604,9 @@ public void llenarProveedor(){
                 .addGap(26, 26, 26)
                 .addComponent(btnGenerarVenta)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Label1)
+                .addGap(82, 82, 82)
+                .addComponent(LabelTotal)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -1665,8 +1664,8 @@ public void llenarProveedor(){
                         .addGroup(JPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnGenerarVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(JPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel13)
-                                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(Label1)
+                                .addComponent(LabelTotal)))))
                 .addContainerGap(49, Short.MAX_VALUE))
         );
 
@@ -1844,7 +1843,9 @@ if (txtIdCliente.getText().equals("")) {
 
     private void TableVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableVentasMouseClicked
 
-       
+          // TODO add your handling code here:
+        int fila = TableVentas.rowAtPoint(evt.getPoint());
+        txtIdVenta.setText(TableVentas.getValueAt(fila, 0).toString());        
     }//GEN-LAST:event_TableVentasMouseClicked
 
     private void txtCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoActionPerformed
@@ -1971,25 +1972,18 @@ if (txtIdCliente.getText().equals("")) {
 
     private void txtRucVentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRucVentaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-
-        if (!txtRucVenta.getText().isEmpty()) {
-
-            String dni = txtRucVenta.getText();  
-            Cliente cl = cliDao.BuscarCliente(dni);
-
-            if (cl.getNombre() != null) {
-                txtNombreClienteventa.setText(cl.getNombre());
-                txtIdCV.setText("" + cl.getId());
-            } else {
-                JOptionPane.showMessageDialog(null, "El cliente no existe");
-                txtRucVenta.setText("");
+            if (!"".equals(txtRucVenta.getText())) {
+                String dni = txtRucVenta.getText();
+                Cliente cl=cliDao.BuscarCliente(dni);
+                if (cl.getNombre() != null) {
+                    txtNombreClienteventa.setText("" + cl.getNombre());
+                    txtIdCV.setText("" + cl.getId());
+                } else {
+                    txtRucVenta.setText("");
+                    JOptionPane.showMessageDialog(null, "El cliente no existe");
+                }
             }
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Ingrese un DNI o RUC");
         }
-    }
-      
     }//GEN-LAST:event_txtRucVentaKeyPressed
 
     private void btnEliminarventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarventaActionPerformed
@@ -2098,50 +2092,44 @@ if (txtIdCliente.getText().equals("")) {
     }//GEN-LAST:event_btnGuardarproActionPerformed
 
     private void txtCantidadVentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadVentaKeyPressed
-           if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-        
-        try{
-            // Validaciones
-            if(txtDescripcionVenta.getText().isEmpty()){
-                JOptionPane.showMessageDialog(null,"Primero busca un producto");
-                return;
-            }
+     if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        if (!"".equals(txtCantidadVenta.getText())) {
 
+            int id = Integer.parseInt(txtIdPro.getText());
+            String descripcion = txtDescripcionVenta.getText();
             int cant = Integer.parseInt(txtCantidadVenta.getText());
             double precio = Double.parseDouble(txtPrecioVenta.getText());
+            double total = cant * precio;
             int stock = Integer.parseInt(txtStockDisponible.getText());
 
-            if(cant > stock){
-                JOptionPane.showMessageDialog(null,"Cantidad supera el stock disponible");
-                return;
+            if (stock >= cant) {
+
+                // Evitar duplicados
+                for (int i = 0; i < TableVenta.getRowCount(); i++) {
+                    Object valorCelda = TableVenta.getValueAt(i, 1);
+                    if (valorCelda != null && valorCelda.equals(descripcion)) {
+                        JOptionPane.showMessageDialog(null, "El producto ya está registrado");
+                        return;
+                    }
+                }
+
+                DefaultTableModel model = (DefaultTableModel) TableVenta.getModel();
+
+                // Agregar en la PRIMERA FILA
+                model.insertRow(0, new Object[]{id, descripcion, cant, precio, total});
+
+                TotalPagar();
+                LimparVenta();
+                txtCodigoVenta.requestFocus();
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Stock no disponible");
             }
 
-            double total = cant * precio;
-
-            // Agregar a tabla
-            DefaultTableModel modelo = (DefaultTableModel) TableVenta.getModel();
-        modelo.insertRow(0, new Object[]{
-            txtIdPro.getText(),          
-            txtDescripcionVenta.getText(), 
-            cant,                           
-            precio,                    
-            total                            
-        });
-
-            // Limpiar campos
-            txtCodigoVenta.setText("");
-            txtDescripcionVenta.setText("");
-            txtPrecioVenta.setText("");
-            txtStockDisponible.setText("");
-            txtCantidadVenta.setText("");
-
-            txtCodigoVenta.requestFocus(); 
-            
-
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null,"Error: " + e.getMessage());
-           }
-           }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese Cantidad");
+        }
+        }
     }//GEN-LAST:event_txtCantidadVentaKeyPressed
 
     private void txtCodigoProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoProActionPerformed
@@ -2247,7 +2235,7 @@ if (txtIdCliente.getText().equals("")) {
     }//GEN-LAST:event_cbxProveedorProItemStateChanged
 
     private void txtCantidadVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadVentaKeyTyped
-           event.numberKeyPress(evt);        // TODO add your handling code here:
+           event.numberKeyPress(evt);   // TODO add your handling code here:
     }//GEN-LAST:event_txtCantidadVentaKeyTyped
 
     private void txtDesProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDesProActionPerformed
@@ -2289,6 +2277,8 @@ if (txtIdCliente.getText().equals("")) {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel JPanel2;
+    private javax.swing.JLabel Label1;
+    private javax.swing.JLabel LabelTotal;
     private javax.swing.JLabel LabelVendedor;
     private com.toedter.calendar.JDateChooser Midate;
     private javax.swing.JTable TableCliente;
@@ -2330,7 +2320,6 @@ if (txtIdCliente.getText().equals("")) {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -2415,7 +2404,6 @@ if (txtIdCliente.getText().equals("")) {
     private javax.swing.JTextField txtTelefonoCliente;
     private javax.swing.JTextField txtTelefonoConfig;
     private javax.swing.JTextField txtTelefonoProveedor;
-    private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 
      
@@ -2425,13 +2413,34 @@ if (txtIdCliente.getText().equals("")) {
     }
 
         private void TotalPagar() {
-        Totalpagar = 0.00;
-        int numFila = TableVenta.getRowCount();
-        for (int i = 0; i < numFila; i++) {
-            double cal = Double.parseDouble(String.valueOf(TableVenta.getModel().getValueAt(i, 4)));
-            Totalpagar = Totalpagar + cal;
+         Totalpagar = 0.00;
+    int numFila = TableVenta.getRowCount();
+
+    for (int i = 0; i < numFila; i++) {
+
+        Object valor = TableVenta.getValueAt(i, 4); // Total
+
+        if (valor == null) {
+            continue; // ignorar filas que aún no tienen total
         }
-        txtTotal.setText(String.format("%.2f", Totalpagar));
+
+        try {
+            Totalpagar += Double.parseDouble(valor.toString());
+        } catch (NumberFormatException e) {
+            System.out.println("No es número en fila " + i + ": " + valor);
+          }
+    }
+
+    Label1.setText(String.format("%.2f", Totalpagar));
+    }
+
+            private void LimparVenta() {
+        txtCodigoVenta.setText("");
+        txtDescripcionVenta.setText("");
+        txtCantidadVenta.setText("");
+        txtStockDisponible.setText("");
+        txtPrecioVenta.setText("");
+        txtIdVenta.setText("");
     }
 
     private void RegistrarVenta() {
@@ -2445,31 +2454,33 @@ if (txtIdCliente.getText().equals("")) {
         Vdao.RegistrarVenta(v);
     }
 
-      private void RegistrarDetalle() {
-        int idVenta = Vdao.IdVenta();
+     private void RegistrarDetalle() {
+     int idVenta = Vdao.IdVenta();
 
     for (int i = 0; i < TableVenta.getRowCount(); i++) {
 
-        // VALIDAR QUE LA FILA NO ESTÉ VACÍA
-        if (TableVenta.getValueAt(i, 0) == null ||
-            TableVenta.getValueAt(i, 1) == null ||
-            TableVenta.getValueAt(i, 2) == null ||
-            TableVenta.getValueAt(i, 3) == null) {
-            continue;  // Ignora filas incompletas
+        // VALIDAR TODAS LAS COLUMNAS NECESARIAS
+        Object idObj = TableVenta.getValueAt(i, 0);
+        Object descObj = TableVenta.getValueAt(i, 1);
+        Object cantObj = TableVenta.getValueAt(i, 2);
+        Object precioObj = TableVenta.getValueAt(i, 3);
+
+        // SI CUALQUIER CELDA ESTÁ VACÍA SE DEBE  IGNORAR FILA
+        if (idObj == null || descObj == null || cantObj == null || precioObj == null) {
+            continue;
         }
 
-        // EXTRAER DATOS DE MANERA SEGURA
-        int id_pro = Integer.parseInt(TableVenta.getValueAt(i, 0).toString());
-        int cant = Integer.parseInt(TableVenta.getValueAt(i, 2).toString());
-        double precio = Double.parseDouble(TableVenta.getValueAt(i, 3).toString());
+        // CONVERTIR VALORES
+        int id_pro = Integer.parseInt(idObj.toString());
+        int cant = Integer.parseInt(cantObj.toString());
+        double precio = Double.parseDouble(precioObj.toString());
 
-        // SETEAR DATOS
+        // GUARDAR EN EL OBJETO
         Dv.setId_pro(id_pro);
         Dv.setCantidad(cant);
         Dv.setPrecio(precio);
         Dv.setId(idVenta);
 
-        // GUARDAR DETALLE EN BD
         Vdao.RegistrarDetalle(Dv);
     }
 
@@ -2477,16 +2488,16 @@ if (txtIdCliente.getText().equals("")) {
     int cliente = Integer.parseInt(txtIdCV.getText());
     Vdao.pdfV(idVenta, cliente, Totalpagar, LabelVendedor.getText());
     }
+
     private void ActualizarStock() {
-   
-    }
+      }   
+
 
     private void LimpiarTableVenta() {
       
     }
 
     private void LimpiarClienteventa() {
-    
+     }
     }
-}
 

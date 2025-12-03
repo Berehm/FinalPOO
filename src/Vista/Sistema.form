@@ -1932,9 +1932,9 @@
                           <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                           <Component id="btnGenerarVenta" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="txtTotal" min="-2" max="-2" attributes="0"/>
+                          <Component id="Label1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
+                          <Component id="LabelTotal" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
@@ -2007,8 +2007,8 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="btnGenerarVenta" alignment="0" min="-2" pref="24" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtTotal" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="Label1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="LabelTotal" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -2167,7 +2167,7 @@
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtNombreClienteventa">
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel13">
+                <Component class="javax.swing.JLabel" name="Label1">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Segoe UI" size="14" style="1"/>
@@ -2215,7 +2215,10 @@
                     <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCantidadVentaKeyTyped"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtTotal">
+                <Component class="javax.swing.JLabel" name="LabelTotal">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="-----"/>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>
