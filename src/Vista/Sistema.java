@@ -1902,6 +1902,8 @@ if (txtIdCliente.getText().equals("")) {
 
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
         jTabbedPane1.setSelectedIndex(2);    
+         LimpiarTable();
+        ListarUsuarios();
     }//GEN-LAST:event_btnUsuariosActionPerformed
 
     private void btnProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProductosMouseClicked
@@ -2496,7 +2498,7 @@ if (txtIdCliente.getText().equals("")) {
     private void LimpiarTableVenta() {
       
     }
-
+  
     private void LimpiarClienteventa() {
      }
     }
